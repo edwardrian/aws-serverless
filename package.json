@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "serverless": "^4.42.0"
+  },
+  "devDependencies": {
+    "serverless-domain-manager": "^9.1.1",
+    "serverless-plugin-canary-deployments": "^0.8.0"
+  }
+}
