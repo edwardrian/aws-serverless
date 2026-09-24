@@ -1,0 +1,36 @@
+service: canary
+
+provider:
+  name: aws
+  runtime: python3.12
+  region: us-east-1
+
+
+plugins:
+  - serverless-plugin-canary-deployments
+  - serverless-domain-manager
+
+custom:
+  customDomain:
+    domainName: ${param:domain, 'api.example.com'}
+    createRoute53Record: false       
+    endpointType: 'regional'
+    autoDomain: true
+
+functions:
+  canary:
+    handler: app.canary
+    events:
+      - http:
+          path: canary
+          method: get
+    deploymentSettings:
+      type: Canary10Percent5Minutes
+      alias: live
+
+  general:
+    handler: app.general
+    events:
+      - http:
+          path: general
+          method: get
